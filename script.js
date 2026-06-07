@@ -1,91 +1,127 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const toggleBtn = document.getElementById('toggleBtn');
-    const statsBlock = document.getElementById('statsBlock');
-    const loadingEl = document.getElementById('loading');
-    const statsContent = document.getElementById('statsContent');
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1f0b3d, #4b6cb7);
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
 
-    const userId = "38574892";
-    
-    // Используем открытый всемирный прокси-сервер для прямого чтения страницы профиля osu!
-    const proxyUrl = "https://allorigins.win";
-    const targetUrl = encodeURIComponent(`https://ppy.sh{userId}`);
+.card {
+    background: rgba(20, 10, 35, 0.65);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 2px solid rgba(189, 162, 255, 0.3);
+    border-radius: 24px;
+    padding: 35px;
+    width: 440px; /* Немного расширили карточку, чтобы оригинальный информер osu! влезал идеально */
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 
-    async function fetchOsuStats() {
-        try {
-            // Добавляем timestamp, чтобы GitHub и прокси выдавали самые свежие данные без задержек
-            const response = await fetch(`${proxyUrl}${targetUrl}&_t=${new Date().getTime()}`);
-            if (!response.ok) throw new Error('Ошибка сети');
-            
-            const data = await response.json();
-            
-            // Создаем виртуальный документ из полученной страницы профиля osu!
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(data.contents, 'text/html');
+.card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(189, 162, 255, 0.6);
+    box-shadow: 0 20px 45px rgba(142, 45, 226, 0.4);
+}
 
-            // Находим скрытый блок JSON с полной официальной статистикой игрока
-            const jsonScript = doc.getElementById('json-user');
-            if (jsonScript) {
-                const userData = JSON.parse(jsonScript.textContent);
-                
-                // Раскладываем официальные живые данные по полочкам
-                document.getElementById('username').textContent = userData.username || "Statixcx";
-                
-                // Ранг
-                const globalRank = userData.statistics.global_rank;
-                document.getElementById('globalRank').textContent = globalRank ? `#${globalRank.toLocaleString()}` : 'Без ранга';
-                
-                // Точность
-                const accuracy = userData.statistics.hit_accuracy;
-                document.getElementById('accuracy').textContent = accuracy ? `${accuracy.toFixed(2)}%` : '98.35%';
-                
-                // Количество игр
-                const playCount = userData.statistics.play_count;
-                document.getElementById('playcount').textContent = playCount ? playCount.toLocaleString() : '13,653';
-                
-                // Очки PP
-                const ppValue = userData.statistics.pp;
-                document.getElementById('pp').textContent = ppValue ? `${Math.round(ppValue).toLocaleString()} pp` : '0 pp';
-                
-                // Уровень аккаунта
-                const level = userData.statistics.level.current;
-                document.getElementById('level').textContent = level ? level : '--';
+.character-img {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 4px solid #bda2ff;
+    object-fit: cover;
+    background-color: #2b1055;
+    box-shadow: 0 0 25px rgba(189, 162, 255, 0.7);
+    transition: transform 0.5s ease;
+}
 
-                // Скрываем плашку загрузки и плавно выводим готовые статы
-                loadingEl.style.display = 'none';
-                statsContent.style.display = 'block';
-            } else {
-                throw new Error('Профиль скрыт или изменилась структура сайта osu!');
-            }
-        } catch (error) {
-            console.error("Попытка повторного подключения к osu!...", error);
-            // Если сеть временно моргнула, подставляем базовые данные профиля, чтобы сайт не зависал на загрузке
-            document.getElementById('globalRank').textContent = '#65,432';
-            document.getElementById('accuracy').textContent = '98.35%';
-            document.getElementById('playcount').textContent = '13,653';
-            document.getElementById('pp').textContent = '3,478 pp';
-            document.getElementById('level').textContent = '92';
-            
-            loadingEl.style.display = 'none';
-            statsContent.style.display = 'block';
-        }
-    }
+.card:hover .character-img {
+    transform: rotate(5deg) scale(1.03);
+}
 
-    // Обработка кнопки Показать / Скрыть
-    toggleBtn.addEventListener('click', () => {
-        statsBlock.classList.toggle('show');
+h1 {
+    font-size: 26px;
+    margin: 20px 0 5px;
+    color: #f3e5f5;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
 
-        if (statsBlock.classList.contains('show')) {
-            toggleBtn.textContent = 'Скрыть статистику';
-            fetchOsuStats(); // Обновляем данные при открытии шторки
-        } else {
-            toggleBtn.textContent = 'Показать статистику';
-        }
-    });
+.subtitle {
+    font-size: 14px;
+    color: #b39ddb;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
 
-    // Автоматическое обновление данных каждые 15 секунд, пока шторка открыта
-    setInterval(() => {
-        if (statsBlock.classList.contains('show')) {
-            fetchOsuStats();
-        }
-    }, 15000);
-});
+.btn-toggle {
+    background: linear-gradient(45deg, #9c27b0, #673ab7);
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(103, 58, 183, 0.4);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-toggle:hover {
+    background: linear-gradient(45deg, #673ab7, #9c27b0);
+    box-shadow: 0 6px 25px rgba(156, 39, 176, 0.6);
+    transform: scale(1.02);
+}
+
+/* Выезжающая шторка под размеры живого информера */
+.stats-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), margin-top 0.4s ease, padding 0.4s ease;
+    text-align: center;
+    background: rgba(10, 5, 20, 0.4);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.stats-container.show {
+    max-height: 220px;
+    margin-top: 25px;
+    padding: 15px;
+    border: 1px solid rgba(189, 162, 255, 0.2);
+}
+
+/* Стили самого информера */
+.osu-iframe {
+    width: 100%;
+    height: 125px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.profile-link {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #e040fb;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+.profile-link:hover {
+    color: #b388ff;
+    text-decoration: underline;
+}
