@@ -9,7 +9,7 @@
 <body>
 
     <div class="card">
-        <!-- Картинка Окаю из твоей папки -->
+        <!-- Твое локальное фото Окаю из папки -->
         <img src="okayu.jpg" alt="Okayu Nekomata" class="character-img">
         
         <h1>Statixcx x Okayu</h1>
@@ -20,12 +20,39 @@
 
         <!-- Блок со статистикой -->
         <div class="stats-container" id="statsBlock">
+            <!-- Индикатор загрузки данных -->
+            <div id="loading" class="loading-text">Синхронизация с osu! сервером...</div>
             
-            <!-- Официальная живая картинка от разработчиков osu!. Она никогда не заблокируется -->
-            <img id="osuSig" src="https://lemres.de" alt="osu! статистика" class="osu-sig-img">
-            
-            <!-- Единственная точная ссылка на профиль под всей статистикой -->
-            <a href="https://osu.ppy.sh/users/38574892" target="_blank" rel="noopener noreferrer" class="profile-link">Открыть оригинальный профиль osu!</a>
+            <!-- Красивый текстовый блок со статами -->
+            <div id="statsContent" style="display: none; width: 100%;">
+                <div class="stat-item">
+                    <span class="stat-label">Игрок:</span>
+                    <span class="stat-value" id="username">Statixcx</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Рейтинг в мире (Global):</span>
+                    <span class="stat-value" id="globalRank" style="color: #ffb4e6;">#151 388</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Точность (Accuracy):</span>
+                    <span class="stat-value" id="accuracy">98.66%</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Количество игр (Playcount):</span>
+                    <span class="stat-value" id="playcount">16 854</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Рейтинговые очки (PP):</span>
+                    <span class="stat-value" id="pp" style="color: #bda2ff; font-weight: 900;">4 332 pp</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Текущий уровень (Level):</span>
+                    <span class="stat-value" id="level">98</span>
+                </div>
+                
+                <!-- Единственная точная ссылка на профиль под всей статистикой -->
+                <a href="https://ppy.sh" target="_blank" rel="noopener noreferrer" class="profile-link">Открыть оригинальный профиль osu!</a>
+            </div>
         </div>
     </div>
 
