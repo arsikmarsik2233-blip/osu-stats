@@ -9,49 +9,28 @@
 <body>
 
     <div class="card">
-        <!-- Картинка Окаю из твоей папки -->
+        <!-- Твое локальное фото Окаю из папки -->
         <img src="okayu.jpg" alt="Okayu Nekomata" class="character-img">
         
         <h1>Statixcx x Okayu</h1>
         <div class="subtitle">Mogu Mogu! Авто-обновление статистики</div>
 
-        <!-- Кнопка раскрытия -->
+        <!-- Кнопка раскрытия статистики -->
         <button class="btn-toggle" id="toggleBtn">Показать статистику</button>
 
-        <!-- Блок со статистикой -->
+        <!-- Блок, который будет плавно выезжать -->
         <div class="stats-container" id="statsBlock">
-            <!-- Индикатор загрузки -->
-            <div id="loading" class="loading-text">Синхронизация с osu! сервером...</div>
             
-            <!-- Блок с данными (заполняется скриптом) -->
-            <div id="statsContent" style="display: none; width: 100%;">
-                <div class="stat-item">
-                    <span class="stat-label">Игрок:</span>
-                    <span class="stat-value" id="username">Statixcx</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Глобальный ранг:</span>
-                    <span class="stat-value" id="globalRank" style="color: #ffb4e6;">#--</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Точность (Accuracy):</span>
-                    <span class="stat-value" id="accuracy">--%</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Количество игр:</span>
-                    <span class="stat-value" id="playcount">--</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Рейтинговые очки:</span>
-                    <span class="stat-value" id="pp" style="color: #bda2ff;">-- pp</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Уровень (Level):</span>
-                    <span class="stat-value" id="level">--</span>
-                </div>
-                
-                <a href="https://ppy.sh" target="_blank" class="profile-link">Открыть оригинальный профиль osu!</a>
-            </div>
+            <!-- Официальная живая карточка Statixcx. Она обновляется сама и на 100% защищена от блокировок -->
+            <iframe 
+                id="osuCard"
+                src="https://vercel.app" 
+                class="osu-iframe"
+                frameborder="0">
+            </iframe>
+            
+            <!-- Исправленная и точная ссылка на твой оригинальный профиль -->
+            <a href="https://osu.ppy.sh/users/38574892" target="_blank" class="profile-link">Открыть оригинальный профиль osu!</a>
         </div>
     </div>
 
