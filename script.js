@@ -1,127 +1,30 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #1f0b3d, #4b6cb7);
-    color: #ffffff;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('toggleBtn');
+    const statsBlock = document.getElementById('statsBlock');
+    const osuCard = document.getElementById('osuCard');
 
-.card {
-    background: rgba(20, 10, 35, 0.65);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 2px solid rgba(189, 162, 255, 0.3);
-    border-radius: 24px;
-    padding: 35px;
-    width: 440px; /* Немного расширили карточку, чтобы оригинальный информер osu! влезал идеально */
-    text-align: center;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.05);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
+    toggleBtn.addEventListener('click', () => {
+        // Плавное открытие или закрытие шторки
+        statsBlock.classList.toggle('show');
 
-.card:hover {
-    transform: translateY(-8px);
-    border-color: rgba(189, 162, 255, 0.6);
-    box-shadow: 0 20px 45px rgba(142, 45, 226, 0.4);
-}
+        if (statsBlock.classList.contains('show')) {
+            toggleBtn.textContent = 'Скрыть статистику';
+            
+            // Сбрасываем кэш информера при открытии, чтобы он моментально скачал твою свежую игру
+            if (osuCard) {
+                const currentSrc = osuCard.src.split('&_t=')[0];
+                osuCard.src = `${currentSrc}&_t=${Date.now()}`;
+            }
+        } else {
+            toggleBtn.textContent = 'Показать статистику';
+        }
+    });
 
-.character-img {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    border: 4px solid #bda2ff;
-    object-fit: cover;
-    background-color: #2b1055;
-    box-shadow: 0 0 25px rgba(189, 162, 255, 0.7);
-    transition: transform 0.5s ease;
-}
-
-.card:hover .character-img {
-    transform: rotate(5deg) scale(1.03);
-}
-
-h1 {
-    font-size: 26px;
-    margin: 20px 0 5px;
-    color: #f3e5f5;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    font-weight: 700;
-    letter-spacing: 0.5px;
-}
-
-.subtitle {
-    font-size: 14px;
-    color: #b39ddb;
-    margin-bottom: 25px;
-    font-weight: 500;
-}
-
-.btn-toggle {
-    background: linear-gradient(45deg, #9c27b0, #673ab7);
-    color: white;
-    border: none;
-    padding: 14px 30px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(103, 58, 183, 0.4);
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.btn-toggle:hover {
-    background: linear-gradient(45deg, #673ab7, #9c27b0);
-    box-shadow: 0 6px 25px rgba(156, 39, 176, 0.6);
-    transform: scale(1.02);
-}
-
-/* Выезжающая шторка под размеры живого информера */
-.stats-container {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), margin-top 0.4s ease, padding 0.4s ease;
-    text-align: center;
-    background: rgba(10, 5, 20, 0.4);
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.stats-container.show {
-    max-height: 220px;
-    margin-top: 25px;
-    padding: 15px;
-    border: 1px solid rgba(189, 162, 255, 0.2);
-}
-
-/* Стили самого информера */
-.osu-iframe {
-    width: 100%;
-    height: 125px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-}
-
-.profile-link {
-    display: block;
-    text-align: center;
-    margin-top: 15px;
-    color: #e040fb;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: bold;
-    transition: color 0.2s ease;
-}
-
-.profile-link:hover {
-    color: #b388ff;
-    text-decoration: underline;
-}
+    // Полное авто-обновление каждые 20 секунд прямо во время того, как ты играешь в osu!
+    setInterval(() => {
+        if (statsBlock.classList.contains('show') && osuCard) {
+            const currentSrc = osuCard.src.split('&_t=')[0];
+            osuCard.src = `${currentSrc}&_t=${Date.now()}`;
+        }
+    }, 20000);
+});
