@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const statsContent = document.getElementById('statsContent');
 
     const userId = "38574892";
-    // Официальный и самый быстрый JSON-шлюз сообщества osu!
+    // Официальный прямой API шлюз для работы сайта в интернете
     const apiUrl = `https://vercel.app{userId}?mode=osu`;
 
     async function fetchOsuStats() {
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const userData = await response.json();
             
             if (userData) {
-                // Подставляем живые значения в карточку
+                // Подставляем живые значения в вашу фиолетовую карточку
                 document.getElementById('username').textContent = userData.username || "Statixcx";
                 
                 const rank = userData.global_rank || userData.rank;
@@ -40,12 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 statsContent.style.display = 'block';
             }
         } catch (error) {
-            console.error("Повторное подключение к шлюзу...", error);
+            console.error("Переподключение к шлюзу...", error);
             loadingEl.textContent = "Синхронизация задерживается...";
         }
     }
 
-    // Обработка кнопки
+    // Обработка кнопки Показать/Скрыть
     toggleBtn.addEventListener('click', () => {
         statsBlock.classList.toggle('show');
 
