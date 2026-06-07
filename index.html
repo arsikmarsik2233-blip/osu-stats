@@ -20,39 +20,19 @@
 
         <!-- Блок со статистикой -->
         <div class="stats-container" id="statsBlock">
-            <!-- Индикатор загрузки данных -->
-            <div id="loading" class="loading-text">Синхронизация с osu! сервером...</div>
             
-            <!-- Красивый текстовый блок со статами -->
-            <div id="statsContent" style="display: none; width: 100%;">
-                <div class="stat-item">
-                    <span class="stat-label">Игрок:</span>
-                    <span class="stat-value" id="username">Statixcx</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Рейтинг в мире (Global):</span>
-                    <span class="stat-value" id="globalRank" style="color: #ffb4e6;">#151 388</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Точность (Accuracy):</span>
-                    <span class="stat-value" id="accuracy">98.66%</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Количество игр (Playcount):</span>
-                    <span class="stat-value" id="playcount">16 854</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Рейтинговые очки (PP):</span>
-                    <span class="stat-value" id="pp" style="color: #bda2ff; font-weight: 900;">4 332 pp</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Текущий уровень (Level):</span>
-                    <span class="stat-value" id="level">98</span>
-                </div>
-                
-                <!-- Единственная точная ссылка на профиль под всей статистикой -->
-                <a href="https://ppy.sh" target="_blank" rel="noopener noreferrer" class="profile-link">Открыть оригинальный профиль osu!</a>
-            </div>
+            <!-- Официальная живая карточка-информер Mikubot. Она берёт данные прямо из базы osu! -->
+            <object 
+                id="osuWidget"
+                data="https://ppy.sh" 
+                type="image/png" 
+                class="osu-iframe-widget">
+                <!-- Резервная прямая ссылка-картинка, которая обновляется без кэша -->
+                <img id="osuImg" src="https://vtop.site" alt="osu! stats" style="width:100%; border-radius:10px;">
+            </object>
+            
+            <!-- Единственная точная ссылка на профиль под всей статистикой -->
+            <a href="https://ppy.sh" target="_blank" rel="noopener noreferrer" class="profile-link">Открыть оригинальный профиль osu!</a>
         </div>
     </div>
 
