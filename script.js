@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.getElementById('toggleBtn');
     const statsBlock = document.getElementById('statsBlock');
-    const osuWidget = document.getElementById('osuWidget');
+    const osuSig = document.getElementById('osuSig');
+
+    // Ссылка на официальную картинку твоих стат
+    const baseImgUrl = "https://lemres.de";
 
     toggleBtn.addEventListener('click', () => {
         statsBlock.classList.toggle('show');
@@ -9,19 +12,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (statsBlock.classList.contains('show')) {
             toggleBtn.textContent = 'Скрыть статистику';
             
-            // Принудительно перезагружаем встроенную карточку при открытии, чтобы подтянуть свежий ранк
-            if (osuWidget) {
-                osuWidget.src = osuWidget.src;
+            // Принудительно заставляем браузер обновить картинку в момент открытия шторки
+            if (osuSig) {
+                osuSig.src = `${baseImgUrl}?t=${Date.now()}`;
             }
         } else {
             toggleBtn.textContent = 'Показать статистику';
         }
     });
 
-    // Раз в 30 секунд обновляем карточку в фоне, пока шторка открыта
+    // Каждые 30 секунд обновляем картинку, чтобы поймать окончание твоей катки
     setInterval(() => {
-        if (statsBlock.classList.contains('show') && osuWidget) {
-            osuWidget.src = osuWidget.src;
+        if (statsBlock.classList.contains('show') && osuSig) {
+            osuSig.src = `${baseImgUrl}?t=${Date.now()}`;
         }
     }, 30000);
 });
